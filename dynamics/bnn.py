@@ -355,7 +355,7 @@ class BNN(LasagnePowered, Serializable):
 
         # MC samples.
         _log_p_D_given_w = []
-        for _ in xrange(self.n_samples):
+        for _ in range(self.n_samples):
             # Make prediction.
             prediction = self.pred_sym(input)
             # Calculate model likelihood log(P(D|w)).
@@ -379,7 +379,7 @@ class BNN(LasagnePowered, Serializable):
 
         # MC samples.
         _log_p_D_given_w = []
-        for _ in xrange(self.n_samples):
+        for _ in range(self.n_samples):
             # Make prediction.
             prediction = self.pred_sym(input)
             # Calculate model likelihood log(P(sample|w)).
@@ -396,7 +396,7 @@ class BNN(LasagnePowered, Serializable):
         network = lasagne.layers.InputLayer(shape=(1, self.n_in))
 
         # Hidden layers
-        for i in xrange(len(self.n_hidden)):
+        for i in range(len(self.n_hidden)):
             # Probabilistic layer (1) or deterministic layer (0).
             if self.layers_type[i] == 1:
                 network = BNNLayer(
@@ -454,7 +454,7 @@ class BNN(LasagnePowered, Serializable):
                 informed step in the correct descent direction."""
                 grads = T.grad(loss_or_grads, params)
                 updates = OrderedDict()
-                for i in xrange(len(params)):
+                for i in range(len(params)):
                     param = params[i]
                     grad = grads[i]
                     if param.name == 'mu' or param.name == 'b_mu':
@@ -476,7 +476,7 @@ class BNN(LasagnePowered, Serializable):
                 grads = T.grad(loss, params)
 
                 kl_component = []
-                for i in xrange(len(params)):
+                for i in range(len(params)):
                     param = params[i]
                     grad = grads[i]
 

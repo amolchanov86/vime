@@ -25,6 +25,7 @@ class NPO(BatchPolopt):
         self.optimizer = optimizer
         self.step_size = step_size
         super(NPO, self).__init__(**kwargs)
+        print('NPO with exploration initialized')
 
     @overrides
     def init_opt(self):

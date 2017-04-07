@@ -15,7 +15,7 @@ def _worker_init(G, id):
 def initialize(n_parallel):
     singleton_pool.initialize(n_parallel)
     singleton_pool.run_each(
-        _worker_init, [(id,) for id in xrange(singleton_pool.n_parallel)])
+        _worker_init, [(id,) for id in range(singleton_pool.n_parallel)])
 
 
 def _worker_populate_task(G, env, policy, dynamics):
@@ -40,7 +40,7 @@ def _worker_set_seed(_, seed):
 def set_seed(seed):
     singleton_pool.run_each(
         _worker_set_seed,
-        [(seed + i,) for i in xrange(singleton_pool.n_parallel)]
+        [(seed + i,) for i in range(singleton_pool.n_parallel)]
     )
 
 
@@ -76,7 +76,7 @@ def _worker_collect_one_path(G, max_path_length, itr, normalize_reward,
         _targets = obs_nxt
         # KL vector assumes same shape as reward.
         kl = np.zeros(rew.shape)
-        for j in xrange(int(np.ceil(obs.shape[0] / float(kl_batch_size)))):
+        for j in range(int(np.ceil(obs.shape[0] / float(kl_batch_size)))):
 
             # Save old params for every update.
             G.dynamics.save_old_params()
@@ -99,14 +99,14 @@ def _worker_collect_one_path(G, max_path_length, itr, normalize_reward,
                         G.dynamics.reset_to_old_params()
             else:
                 # Update model weights based on current minibatch.
-                for _ in xrange(n_itr_update):
+                for _ in range(n_itr_update):
                     G.dynamics.train_update_fn(
                         _inputs[start:end], _targets[start:end])
                 # Calculate current minibatch KL.
                 kl_div = np.clip(
                     float(G.dynamics.f_kl_div_closed_form()), 0, 1000)
 
-            for k in xrange(start, end):
+            for k in range(start, end):
                 kl[k] = kl_div
             # If using replay pool, undo updates.
             if use_replay_pool:
